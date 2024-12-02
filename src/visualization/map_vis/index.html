@@ -12,6 +12,14 @@
       text-align: center;
     }
 
+    #desc {
+      width:960px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+
     #legend {
       width: 800px;
       margin:auto;
@@ -46,7 +54,13 @@
 <body>
   <div>
     <h1>Ballot Box Proximity and Voting Likelihood in Washington State</h1>
-    <p>DESCRIPTION OF PROJECT</p>
+    <div><p id="desc">
+      Proximity to voting locations is a known barrier to public participation 
+      in voting. In this project, we analyzed how distance from ballot boxes 
+      affects turnout across Washington state. The visualization below 
+      shows turnout for each block group or census tract on a gradient, with 
+      locations of ballot boxes marked.
+    </p></div>
     <div id="legend">
       <p id="tn0">0% Turnout</p>
       <p id="tn100">100% Turnout</p>
