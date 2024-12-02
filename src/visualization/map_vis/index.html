@@ -72,6 +72,7 @@
 <!---->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
+  // setup gradient
   const COLOR_0 = [138, 35, 135]
   const COLOR_1 = [242, 113, 33]
   const getGradientClr = proportion => {
@@ -81,6 +82,7 @@
     return `#${r.toString(16)}${g.toString(16)}${b.toString(16)}`;
   }
 
+  // setup mappings from block groups, census tracts to turnout
   const blockGroups = new Map();
   const censusTracts = new Map();
   fetch('./voters_per_block_group.csv')
@@ -107,14 +109,19 @@
   geos.set('bg', ['./tl_2020_53_bg.zip', blockGroups]);
   geos.set('ct', ['./tl_2020_53_tract.zip', censusTracts]);
 
+  // function to load, reload map
   let map = undefined;
   const loadMap = (geo) => {
+    // remove the map if present
     if (map) {
       map.off();
       map.remove();
     }
+    // re-add map
     map = L.map('map').setView([47.35, -120.75], 7);
+    // background layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    // add turnouts
     if (geos.get(geo)) {
       [shapefile, turnouts] = geos.get(geo);
       L.shapefile(shapefile, {
@@ -130,11 +137,30 @@
         }
       }).addTo(map);
     }
+    // add ballot boxes
+    fetch('./Voting_Locations_and_Ballot_Boxes.csv')
+      .then(file => file.blob())
+      .then(file => {
+        Papa.parse(file, {
+          complete: results => {
+            results.data.forEach(row => {
+              long = row.pop();
+              lat = row.pop();
+              if (lat && long) {
+                L.marker([lat, long]).addTo(map);
+              }
+            });
+          },
+          skipEmptyLines: true
+        });
+      });
   };
 
+  // load the map
   loadMap('bg');
   document.getElementById('selected').innerHTML = 'Current: Block Group';
 
+  // add button listeners to switch between block group and census tract level
   document.getElementById('bg').addEventListener('click', () => {
     loadMap('bg');
     document.getElementById('selected').innerHTML = 'Current: Block Group';
