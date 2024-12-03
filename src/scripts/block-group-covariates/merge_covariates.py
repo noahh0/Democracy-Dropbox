@@ -3,7 +3,7 @@ import pandas as pd
 
 def read_race_data():
   race_data = pd.read_csv(
-    './ACSDT5Y2019.B02001-Data.csv',
+    '../../../data/bg_covariates/ACSDT5Y2019.B02001-Data.csv',
     usecols=['GEO_ID', 'B02001_001E', 'B02001_002E', 'B02001_003E', 'B02001_004E', 'B02001_005E', 'B02001_006E',
              'B02001_007E']
   )
@@ -43,7 +43,7 @@ def read_race_data():
 
 def read_income_data():
   income_data = pd.read_csv(
-    './ACSDT5Y2019.B19013-Data.csv',
+    '../../../data/bg_covariates/ACSDT5Y2019.B19013-Data.csv',
     usecols=['GEO_ID', 'B19013_001E'],
     na_values=['-']
   )
@@ -64,7 +64,7 @@ def read_income_data():
 
 def read_poverty_data():
   poverty_data = pd.read_csv(
-    './ACSDT5Y2019.B29003-Data.csv',
+    '../../../data/bg_covariates/ACSDT5Y2019.B29003-Data.csv',
     usecols=['GEO_ID', 'B29003_001E', 'B29003_002E', 'B29003_003E']
   )
 
@@ -93,7 +93,7 @@ def read_poverty_data():
 
 def read_edu_attain_data():
   edu_data = pd.read_csv(
-    './ACSDT5Y2019.B29002-Data.csv',
+    '../../../data/bg_covariates/ACSDT5Y2019.B29002-Data.csv',
     usecols=['GEO_ID', 'B29002_001E', 'B29002_002E', 'B29002_003E', 'B29002_004E', 'B29002_005E', 'B29002_006E',
              'B29002_007E', 'B29002_008E']
   )
@@ -128,7 +128,7 @@ def read_edu_attain_data():
 
 def read_empl_data():
   emp_data = pd.read_csv(
-    './ACSDT5Y2019.B23025-Data.csv',
+    '../../../data/bg_covariates/ACSDT5Y2019.B23025-Data.csv',
     usecols=['GEO_ID', 'B23025_001E', 'B23025_007E']
   )
 
@@ -155,7 +155,7 @@ def read_empl_data():
 def read_vote_data():
   # Read Election Results
   vote_data = pd.read_csv(
-    './votes2016_byCbg_neighbors.csv',
+    '../../../data/bg_covariates/votes2016_byCbg_neighbors.csv',
     usecols=['origin_cbg', 'trump_share_votes', 'clinton_share_votes']
   )
 
@@ -199,4 +199,4 @@ if __name__ == '__main__':
   merge_df = merge_df.merge(vote_data, on='GEO_ID', how='outer')
 
   # Save Results
-  merge_df.to_csv('../block_level_covariates.csv')
+  merge_df.to_csv('./block_level_covariates.csv')
