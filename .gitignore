@@ -1,3 +1,5 @@
 /data/race_18plus_by_bg_2020/*.csv
 /data/race_18plus_by_bg_2020/*.txt
 /data/wa_voters/*.csv
+/data/bg_covariates/*.csv
+/.idea/*
